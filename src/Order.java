@@ -11,7 +11,7 @@ public class Order {
 
     //-orderList: Arrayslist<Integer>
 
-    // -id : int
+    private int id;
 
 
     // + method : calculatePickupTime(dateTime time)
