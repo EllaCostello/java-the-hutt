@@ -3,8 +3,10 @@ public enum OrderStatus {
     // active
     IN_PROGRESS,
     // inProgress
-    COMPLETED;
+    COMPLETED,
     // complete
+    CANCEL;
+    //cancel
 
     OrderStatus() {
 
