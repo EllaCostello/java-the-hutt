@@ -11,6 +11,7 @@ public class Order {
     private ArrayList<Pizza> orderList;
     private int id;
     private double total = 0.0;
+    private static OrderHistory orderHistory = new OrderHistory();
 
 
 
@@ -59,6 +60,13 @@ public class Order {
 
     public void setOrderstatus(OrderStatus orderStatus) {
         this.orderstatus = orderStatus;
+        if (this.orderstatus == OrderStatus.COMPLETED) {
+            orderHistory.addToHistory(this);
+        }
+    }
+
+    public static OrderHistory getOrderHistory() {
+        return orderHistory;
     }
 
 
