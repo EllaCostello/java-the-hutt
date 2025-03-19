@@ -3,12 +3,12 @@ public class Main {
 //        Menu menu = new Menu();
 //        menu.printMenu();
 
-        Order order = new Order();
+        Order order = new Order(30);
         order.addPizzaToOrder(1);
         order.addPizzaToOrder(30);
-        System.out.println(order.calculateFullPrice());
+        System.out.println(order);
 
-        order.calculatePuckupTime(15);
+
 
 
     }
