@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Menu {
     // pizzas arraylist
     Pizza pizza = new Pizza();
@@ -9,7 +7,4 @@ public class Menu {
         pizza.showPizzas();
 
     }
-
-
-
 }
