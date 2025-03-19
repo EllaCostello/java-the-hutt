@@ -1,9 +1,15 @@
+import java.util.ArrayList;
+
 public class Menu {
-
-
     // pizzas arraylist
-    // display menu arrayslist pizza
+    ArrayList pizzaMenu = new ArrayList();
 
+
+    // display menu arrayslist pizza
+public void printMenu() {
+    System.out.println(pizzaMenu);
+
+}
 
 
 }
