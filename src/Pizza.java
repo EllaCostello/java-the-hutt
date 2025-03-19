@@ -65,6 +65,9 @@ public class Pizza {
         pizza.removePizza(pizza);
         System.out.println("Fjernede " + pizza + " fra menu");
     }
+    public double getPrice() {
+        return price;
+    }
 
     public void showPizzas() {
         for (Pizza p : pizzas) {
