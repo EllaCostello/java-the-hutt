@@ -69,6 +69,11 @@ public class Pizza {
         return price;
     }
 
+
+    public int getPizzaNumber() {return pizzaNumber; }
+
+
+
     public void showPizzas() {
         for (Pizza p : pizzas) {
             System.out.println(p);
