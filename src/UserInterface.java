@@ -1,6 +1,8 @@
 import java.util.Scanner;
 public class UserInterface {
-   Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
+    private Pizza pizzaMenu = new Pizza();
+    private OrderHistory orderHistory = new OrderHistory();
 
 
     public void inputHandling() {
@@ -43,5 +45,15 @@ public class UserInterface {
         }
     }
 
+    public void displayMenu() {
+        System.out.println(" ---- Pizza Menu ---- ");
+        for (Pizza pizza : pizzaMenu.getPizzas()) {
+            System.out.println(pizza.getPizzaNumber() + ". " + pizza);
+        }
+    }
 
+    private void displayOrderList() {
+        System.out.println("\n---- Ordre Liste ----");
+        orderHistory.getAllOrders();
+    }
 }
