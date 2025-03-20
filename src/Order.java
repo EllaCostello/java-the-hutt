@@ -73,6 +73,22 @@ public class Order {
             orderHistory.addToHistory(this);
         }
     }
+    public void setIngredient(int pizzaNumber, String ingredient) {
+        for (Pizza p : orderList) {
+            if (p.getPizzaNumber() == pizzaNumber) {
+                p.setIngredient(ingredient);
+
+            }
+        }
+    }
+
+    public String getIngredient(int pizzaNumber) {
+        for (Pizza p : orderList) {
+            if (p.getPizzaNumber() == pizzaNumber) {
+                return p.getIngredient();
+            }
+        }return "-1";
+    }
 
     public static OrderHistory getOrderHistory() {
         return orderHistory;

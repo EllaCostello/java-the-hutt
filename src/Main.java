@@ -24,5 +24,8 @@ public class Main {
         Order.getOrderHistory().getAllOrders();
         System.out.println(Order.getOrderHistory().returnTurnoverTotal());
 
+        order2.setIngredient(10, "tomato");
+        order2.getIngredient(1);
+        System.out.println(order2.getIngredient(10));
     }
 }

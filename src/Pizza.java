@@ -18,6 +18,13 @@ public class Pizza {
         this.pizzaNumber = pizzaNumber;
 
     }
+
+    public String getIngredient() {
+        return ingredience;
+    }
+    public void setIngredient(String ingredience) {
+        this.ingredience = ingredience;
+    }
 //    public Pizza(int pizzaNumber, double price, String name) {
 //        this.name = name;
 //        this.price = price;
