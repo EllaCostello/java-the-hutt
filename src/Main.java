@@ -12,7 +12,6 @@ public class Main {
         Order order2 = new Order(40);
         order2.addPizzaToOrder(10);
         order2.setOrderstatus(OrderStatus.ACTIVE);
-        System.out.println(order2);
         order2.setOrderstatus(OrderStatus.COMPLETED);
 
         Order.getOrderHistory().getAllOrders();
