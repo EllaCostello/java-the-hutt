@@ -1,14 +1,17 @@
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
+
+
+// Authors Theis and Niklas
 public class Order {
     private Pizza pizza = new Pizza();
     private OrderStatus orderstatus;
     private LocalDateTime pickupTime;
     private ArrayList<Pizza> orderList;
+    private static int lasId = 0; // sætter static så alle instances kan se den
     private int id;
     private double total = 0.0;
     private static OrderHistory orderHistory = new OrderHistory();
@@ -27,10 +30,14 @@ public class Order {
 
     }
     public Order(int inputTime) {
+        this.id = ++lasId; // incrementer lastId for hver order og opdaterer id
         this.orderList = new ArrayList<>();
         this.orderstatus = OrderStatus.IN_PROGRESS;
         calculatePickupTime(inputTime);
-        id++;
+
+    }
+    public int getId() {
+        return id; // har tilføjet getter for iD hvis det er nødvendigt
     }
 
     public double calculateFullPrice() {
@@ -58,11 +65,29 @@ public class Order {
         return orderstatus;
     }
 
+//    public void
+
     public void setOrderstatus(OrderStatus orderStatus) {
         this.orderstatus = orderStatus;
         if (this.orderstatus == OrderStatus.COMPLETED) {
             orderHistory.addToHistory(this);
         }
+    }
+    public void setIngredient(int pizzaNumber, String ingredient) {
+        for (Pizza p : orderList) {
+            if (p.getPizzaNumber() == pizzaNumber) {
+                p.setIngredient(ingredient);
+
+            }
+        }
+    }
+
+    public String getIngredient(int pizzaNumber) {
+        for (Pizza p : orderList) {
+            if (p.getPizzaNumber() == pizzaNumber) {
+                return p.getIngredient();
+            }
+        }return "-1";
     }
 
     public static OrderHistory getOrderHistory() {
@@ -87,7 +112,3 @@ public class Order {
 
     }
 }
-
-
-
-
