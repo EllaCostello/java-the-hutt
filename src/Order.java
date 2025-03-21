@@ -16,7 +16,9 @@ public class Order {
     private double total = 0.0;
     private static OrderHistory orderHistory = new OrderHistory();
 
-
+    public ArrayList<Pizza> getOrderList() {
+        return orderList;
+    }
 
     public void addPizzaToOrder(int pizzaNummer) {
         if (pizzaNummer > 0 && pizzaNummer <= pizza.getPizzas().size()) {

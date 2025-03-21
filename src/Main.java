@@ -1,13 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-//        Menu menu = new Menu();
-//        menu.printMenu();
-
         Order order = new Order(30);
         order.addPizzaToOrder(1);
         order.addPizzaToOrder(30);
-        // System.out.println(order);
-
         order.setOrderstatus(OrderStatus.COMPLETED);
 
         Order order1 = new Order(15);
@@ -20,12 +15,16 @@ public class Main {
         System.out.println(order2);
         order2.setOrderstatus(OrderStatus.COMPLETED);
 
-
         Order.getOrderHistory().getAllOrders();
         System.out.println(Order.getOrderHistory().returnTurnoverTotal());
 
         order2.setIngredient(10, "tomato");
         order2.getIngredient(1);
         System.out.println(order2.getIngredient(10));
+
+        // Statistics integration
+        Statistics stats = new Statistics();
+        stats.collectAllTimeOrders();
+        stats.calculateMostOrderedItems(stats.getAllTimeOrders());
     }
 }
