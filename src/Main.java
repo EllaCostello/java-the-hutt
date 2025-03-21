@@ -1,13 +1,13 @@
 public class Main {
     public static void main(String[] args) {
-        Order order = new Order(30);
+        /* Order order = new Order(30);
         order.addPizzaToOrder(1);
         order.addPizzaToOrder(30);
-        order.setOrderstatus(OrderStatus.COMPLETED);
+        order.setOrderstatus(OrderStatus.ACTIVE);
 
         Order order1 = new Order(15);
         order1.addPizzaToOrder(5);
-        order1.setOrderstatus(OrderStatus.COMPLETED);
+        order1.setOrderstatus(OrderStatus.ACTIVE);
 
         Order order2 = new Order(40);
         order2.addPizzaToOrder(10);
@@ -25,5 +25,13 @@ public class Main {
         Statistics stats = new Statistics();
         stats.collectAllTimeOrders();
         stats.calculateMostOrderedItems(stats.getAllTimeOrders());
+
+         */
+
+
+        while (true) {
+            UserInterface userInterface = new UserInterface();
+            userInterface.printMainMenu();
+        }
     }
 }

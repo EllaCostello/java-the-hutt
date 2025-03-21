@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.List;
+
 // Authors Theis and Niklas
 public class Pizza {
     private String name;
@@ -7,12 +7,12 @@ public class Pizza {
     private double price;
     // Price Double
     private int pizzaNumber;
-    private String ingredience;
+    private String ingredients;
 
     private ArrayList<Pizza> pizzas;
 
-    public Pizza(int pizzaNumber, double price, String name, String ingredience) {
-        this.ingredience = ingredience;
+    public Pizza(int pizzaNumber, double price, String name, String ingredients) {
+        this.ingredients = ingredients;
         this.name = name;
         this.price = price;
         this.pizzaNumber = pizzaNumber;
@@ -20,10 +20,10 @@ public class Pizza {
     }
 
     public String getIngredient() {
-        return ingredience;
+        return ingredients;
     }
-    public void setIngredient(String ingredience) {
-        this.ingredience = ingredience;
+    public void setIngredient(String ingredients) {
+        this.ingredients = ingredients;
     }
 //    public Pizza(int pizzaNumber, double price, String name) {
 //        this.name = name;
@@ -139,6 +139,17 @@ public class Pizza {
         return  name +
                 ", pris = " + price +
                 ", pizzaNumber = " + pizzaNumber ;
+    }
+
+    public String pizzaMenu() {
+        if (pizzaNumber < 10) {
+            return """
+                    %-85s %.0f
+                    \033[3m%s\033[0m""".formatted(name, price, ingredients);
+        }
+        return """
+                %-84s %.0f
+                \033[3m%s\033[0m""".formatted(name, price, ingredients);
     }
 
 //getters and setters
