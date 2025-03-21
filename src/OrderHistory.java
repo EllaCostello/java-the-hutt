@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class OrderHistory {
-    public final ArrayList<Order> allOrders = new ArrayList<>();
+    private final ArrayList<Order> allOrders = new ArrayList<>();
 
     public ArrayList<Order> getAllOrdersList() {
         return allOrders;
