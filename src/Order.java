@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -56,6 +57,10 @@ public class Order {
     // + method : calculatePickupTime(dateTime time)
     public void calculatePickupTime(int inputTime) {
         pickupTime = LocalDateTime.now().plus(inputTime, ChronoUnit.MINUTES).truncatedTo(ChronoUnit.SECONDS);
+    }
+
+    public LocalDateTime getPickupTime() {
+        return pickupTime;
     }
 
     public String printCurrentOrder() {

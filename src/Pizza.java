@@ -136,10 +136,9 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return  name +
-                ", pris = " + price +
-                ", pizzaNumber = " + pizzaNumber ;
+        return  pizzaNumber + ". " + name + ", pris: " + price;
     }
+
 
     public String pizzaMenu() {
         if (pizzaNumber < 10) {

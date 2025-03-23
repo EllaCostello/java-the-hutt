@@ -1,11 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
     private Pizza pizzaMenu = new Pizza();
     private OrderHistory orderHistory = new OrderHistory();
-    // private ArrayList<Order> getActiveOrders = Order.ge;
-
 
     public UserInterface() { }
 
@@ -19,9 +19,12 @@ public class UserInterface {
                 1. Vis menukort
                 2. Vis aktive ordre
                 3. Opret ny ordre
-                4. Se mest populære vare
-                5. Se total omsætning
-                6. Afslut program
+                4. Vis ordredetaljer
+                5. Færdiggør ordre
+                6. Annuller ordre
+                7. Se mest populære pizza
+                8. Se total omsætning
+                9. Afslut program
                 
                 Indtast valg her:\s""");
 
@@ -43,18 +46,27 @@ public class UserInterface {
                     displayMenu();
                     break;
                 case 2:
-                    // displayOrderList();
+                    displayOrderList();
                     break;
                 case 3:
                     createOrder();
                     break;
                 case 4:
-                    // getMostPopularItem(statistics);
+                    viewOrderDetails();
                     break;
                 case 5:
-                    // getTurnover(statistics);
+                    completeOrder();
                     break;
                 case 6:
+                    cancelOrder();
+                    break;
+                case 7:
+                    displayMostPopularItem();
+                    break;
+                case 8:
+                    // getTurnover(statistics);
+                    break;
+                case 9:
                     running = false;
                     System.out.println("Afslutter programmet...");
                     break;
@@ -77,16 +89,26 @@ public class UserInterface {
         }
     }
 
-    /*
-    public void displayOrderList() {
-        System.out.println("---- Ordre Liste ----");
-        for (Order order : order.getActiveOrders()) {
-            System.out.println(order);
-        }
 
+    public void displayOrderList() {
+        ArrayList<Order> allOrdersSorted = orderHistory.getAllOrdersList();
+
+        if (!allOrdersSorted.isEmpty()) {
+            System.out.println("""
+                                              ------------------
+                                             |   Aktive Ordre  |
+                                              ------------------
+                    """);
+
+            allOrdersSorted.stream()
+                    .filter(order -> order.getOrderstatus() == OrderStatus.IN_PROGRESS)
+                    .sorted(Comparator.comparing(Order::getPickupTime))
+                    .forEach(System.out::println);
+        } else {
+            System.out.println("Der er ingen aktive ordre");
+        }
     }
 
-     */
 
     public void createOrder() {
         System.out.println("Indtast afhentningstid i minutter:");
@@ -111,5 +133,79 @@ public class UserInterface {
         System.out.println("Din ordre:");
         System.out.println(newOrder);
         orderHistory.addToHistory(newOrder);
+    }
+
+    public void completeOrder() {
+        displayOrderList();
+
+        System.out.println("""
+                Indtast venligst ID på den ordre du gerne vil færdiggøre:\s""");
+
+        Order orderToComplete = handleIDInput();
+
+        if (orderToComplete != null) {
+            orderToComplete.setOrderstatus(OrderStatus.COMPLETED);
+            System.out.println("Ordre med ID: " + orderToComplete.getId() + " er nu færdiggjort");
+        }
+    }
+
+    public void viewOrderDetails() {
+        System.out.println("Indtast venligst ID på den ordre du gerne vil se: ");
+
+        Order orderToView = handleIDInput();
+
+        if (orderToView != null) {
+            System.out.println(orderToView);
+        }
+    }
+
+    public void cancelOrder() {
+        System.out.println("Indtast venlig ID på den ordre der skal annuleres: ");
+
+        Order orderToCancel = handleIDInput();
+
+        if (orderToCancel != null) {
+            System.out.println("DU ER VED AT ANNULERE DENNE ORDRE:");
+            System.out.println(orderToCancel);
+            System.out.println("""
+                    1. BEKRÆFT
+                    2. FOTRYD
+                    """);
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice == 1) {
+                orderHistory.getAllOrdersList().remove(orderToCancel);
+                System.out.println("Ordren er blevet annuleret");
+            }
+        }
+    }
+
+    public void displayMostPopularItem() {
+        Statistics statistics = new Statistics();
+        statistics.calculateMostOrderedItems(orderHistory.getAllOrdersList());
+    }
+
+    public Order handleIDInput() {
+        int chosenID;
+
+        while (true) {
+            if (!scanner.hasNextInt()) {
+                System.out.println("Vi kunne ikke forstå dit ønske, prøv venligst igen: ");
+                scanner.nextLine();
+                continue;
+            }
+
+            chosenID = scanner.nextInt();
+            scanner.nextLine();
+
+            for (Order order : orderHistory.getAllOrdersList()) {
+                if (order.getId() == chosenID) {
+                    return order;
+                }
+            }
+            System.out.println("Vi kunne ikke finde ordren tilknyttet dette ID, prøv venligst igen: ");
+        }
     }
 }
