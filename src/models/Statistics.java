@@ -1,3 +1,5 @@
+package models;
+
 import java.util.ArrayList;
 
 public class Statistics {
@@ -30,29 +32,29 @@ public class Statistics {
             return;
         }
 
-        int[] pizzaCount = new int[31];
+        int[] productCount = new int[31];
 
         for (Order order : allTimeOrders) {
-            for (Pizza pizza : order.getOrderList()) {
-                int pizzaNumber = pizza.getPizzaNumber();
-                pizzaCount[pizzaNumber]++;
+            for (Product product : order.getOrderList()) {
+                int productNumber = product.getProductNumber();
+                productCount[productNumber]++;
             }
         }
 
         int maxCount = 0;
-        int mostPopularPizzaNumber = 0;
+        int mostPopularProductNumber = 0;
 
-        for (int i = 1; i < pizzaCount.length; i++) {
-            if (pizzaCount[i] > maxCount) {
-                maxCount = pizzaCount[i];
-                mostPopularPizzaNumber = i;
+        for (int i = 1; i < productCount.length; i++) {
+            if (productCount[i] > maxCount) {
+                maxCount = productCount[i];
+                mostPopularProductNumber = i;
             }
         }
 
-        Pizza pizza = new Pizza();
-        String pizzaName = pizza.getPizzas().get(mostPopularPizzaNumber - 1).toString();
+        Product product = new Product();
+        String productName = product.getProducts().get(mostPopularProductNumber - 1).toString();
 
-        System.out.println("Mest populære pizza: " + pizzaName);
+        System.out.println("Mest populære produkt: " + productName);
         System.out.println("Bestilt " + maxCount + " gange");
     }
 }
