@@ -1,9 +1,13 @@
+package services;
+
+import models.*;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
-    private Pizza pizzaMenu = new Pizza();
+    private Product productMenu = new Product();
     private OrderHistory orderHistory = new OrderHistory();
 
     public UserInterface() { }
@@ -21,7 +25,7 @@ public class UserInterface {
                 4. Vis ordredetaljer
                 5. Færdiggør ordre
                 6. Annuller ordre
-                7. Se mest populære pizza
+                7. Se mest populære product
                 8. Se total omsætning
                 9. Afslut program
                 
@@ -84,8 +88,8 @@ public class UserInterface {
                                             |    Menukort    |                                        | Pris |
                                              ----------------                                          ------
                 """);
-        for (Pizza pizza : pizzaMenu.getPizzas()) {
-            System.out.println(pizza.getPizzaNumber() + ". " + pizza.pizzaMenu());
+        for (Product product : productMenu.getProducts()) {
+            System.out.println(product.getProductNumber() + ". " + product.productMenu());
         }
     }
 
@@ -119,14 +123,14 @@ public class UserInterface {
         boolean addingPizzas = true;
 
         while (addingPizzas) {
-            System.out.println("Indtast pizza nummer (0 for at afslutte):");
+            System.out.println("Indtast product nummer (0 for at afslutte):");
             int pizzaNum = scanner.nextInt();
             scanner.nextLine();
 
             if (pizzaNum == 0) {
                 addingPizzas = false;
             } else {
-                newOrder.addPizzaToOrder(pizzaNum);
+                newOrder.addProductToOrder(pizzaNum);
             }
         }
 

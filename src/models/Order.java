@@ -1,4 +1,5 @@
-import java.time.LocalDate;
+package models;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -8,10 +9,10 @@ import java.util.ArrayList;
 
 // Authors Theis and Niklas
 public class Order {
-    private Pizza pizza = new Pizza();
+    private Product product = new Product();
     private OrderStatus orderstatus;
     private LocalDateTime pickupTime;
-    private ArrayList<Pizza> orderList;
+    private ArrayList<Product> orderList;
     private static int lasId = 0; // sætter static så alle instances kan se den
     private int id;
     private double total = 0.0;
@@ -26,18 +27,18 @@ public class Order {
 
     }
 
-    public ArrayList<Pizza> getOrderList() {
+    public ArrayList<Product> getOrderList() {
         return orderList;
     }
 
-    public void addPizzaToOrder(int pizzaNummer) {
-        if (pizzaNummer > 0 && pizzaNummer <= pizza.getPizzas().size()) {
-            orderList.add(pizza.getPizzas().get(pizzaNummer - 1));
+    public void addProductToOrder(int productNumber) {
+        if (productNumber > 0 && productNumber <= product.getProducts().size()) {
+            orderList.add(product.getProducts().get(productNumber - 1));
             System.out.println("Ordren har nu: " + orderList);
-            this.total += pizza.getPrice();
+            this.total += product.getPrice();
 
         } else {
-            System.out.println("pizza nummer eksisterer ikke.");
+            System.out.println("Produkt med dette nummer eksisterer ikke.");
         }
 
     }
@@ -48,8 +49,8 @@ public class Order {
 
     public double calculateFullPrice() {
         total = 0.0;
-        for (Pizza pizza : orderList) {
-            total += pizza.getPrice();
+        for (Product product : orderList) {
+            total += product.getPrice();
         }
         return total;
     }
@@ -64,8 +65,8 @@ public class Order {
     }
 
     public String printCurrentOrder() {
-        System.out.println("Order: ");
-        for (Pizza p : orderList) {
+        System.out.println("models.Order: ");
+        for (Product p : orderList) {
             System.out.println(p);
         }
         return "";
@@ -90,18 +91,18 @@ public class Order {
     public ArrayList<Order> getActiveOrders() {
         return activeOrders;
     }
-    public void setIngredient(int pizzaNumber, String ingredient) {
-        for (Pizza p : orderList) {
-            if (p.getPizzaNumber() == pizzaNumber) {
+    public void setIngredient(int productNumber, String ingredient) {
+        for (Product p : orderList) {
+            if (p.getProductNumber() == productNumber) {
                 p.setIngredient(ingredient);
 
             }
         }
     }
 
-    public String getIngredient(int pizzaNumber) {
-        for (Pizza p : orderList) {
-            if (p.getPizzaNumber() == pizzaNumber) {
+    public String getIngredient(int productNumber) {
+        for (Product p : orderList) {
+            if (p.getProductNumber() == productNumber) {
                 return p.getIngredient();
             }
         }return "-1";

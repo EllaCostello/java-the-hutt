@@ -1,10 +1,12 @@
+package models;
+
 public class Menu {
     // pizzas arraylist
-    Pizza pizza = new Pizza();
+    Product product = new Product();
 
     // display menu arrayslist pizza
     public void printMenu() {
-        pizza.showPizzas();
+        product.showProducts();
 
     }
 }
