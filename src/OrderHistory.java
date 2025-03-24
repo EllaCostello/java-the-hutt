@@ -17,7 +17,7 @@ public class OrderHistory {
         allOrders.add(order);
     }
 
-    public double returnTurnoverTotal() {
+    public double getTurnover() {
         double turnover = 0;
 
         for (Order order : allOrders) {

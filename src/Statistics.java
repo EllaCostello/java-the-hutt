@@ -52,9 +52,7 @@ public class Statistics {
         Pizza pizza = new Pizza();
         String pizzaName = pizza.getPizzas().get(mostPopularPizzaNumber - 1).toString();
 
-        System.out.println("Most popular pizza: " + pizzaName);
-        System.out.println("Ordered " + maxCount + " times");
+        System.out.println("Mest populære pizza: " + pizzaName);
+        System.out.println("Bestilt " + maxCount + " gange");
     }
 }
-
-//calculateTurnover(arraysList<order> allTimeOrders)

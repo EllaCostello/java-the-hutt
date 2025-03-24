@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -15,6 +16,15 @@ public class Order {
     private int id;
     private double total = 0.0;
     private static OrderHistory orderHistory = new OrderHistory();
+    private ArrayList<Order> activeOrders = new ArrayList<>();
+
+    public Order(int inputTime) {
+        this.id = ++lasId; // incrementer lastId for hver order og opdaterer id
+        this.orderList = new ArrayList<>();
+        this.orderstatus = OrderStatus.IN_PROGRESS;
+        calculatePickupTime(inputTime);
+
+    }
 
     public ArrayList<Pizza> getOrderList() {
         return orderList;
@@ -31,13 +41,7 @@ public class Order {
         }
 
     }
-    public Order(int inputTime) {
-        this.id = ++lasId; // incrementer lastId for hver order og opdaterer id
-        this.orderList = new ArrayList<>();
-        this.orderstatus = OrderStatus.IN_PROGRESS;
-        calculatePickupTime(inputTime);
 
-    }
     public int getId() {
         return id; // har tilføjet getter for iD hvis det er nødvendigt
     }
@@ -53,6 +57,10 @@ public class Order {
     // + method : calculatePickupTime(dateTime time)
     public void calculatePickupTime(int inputTime) {
         pickupTime = LocalDateTime.now().plus(inputTime, ChronoUnit.MINUTES).truncatedTo(ChronoUnit.SECONDS);
+    }
+
+    public LocalDateTime getPickupTime() {
+        return pickupTime;
     }
 
     public String printCurrentOrder() {
@@ -74,6 +82,13 @@ public class Order {
         if (this.orderstatus == OrderStatus.COMPLETED) {
             orderHistory.addToHistory(this);
         }
+        if (this.orderstatus == OrderStatus.ACTIVE) {
+            activeOrders.add(this);
+        }
+    }
+
+    public ArrayList<Order> getActiveOrders() {
+        return activeOrders;
     }
     public void setIngredient(int pizzaNumber, String ingredient) {
         for (Pizza p : orderList) {
