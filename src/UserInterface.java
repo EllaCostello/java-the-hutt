@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
@@ -64,11 +63,12 @@ public class UserInterface {
                     displayMostPopularItem();
                     break;
                 case 8:
-                    // getTurnover(statistics);
+                    getTurnover();
                     break;
                 case 9:
                     running = false;
                     System.out.println("Afslutter programmet...");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Ugyldig valg. Prøv igen.");
@@ -185,6 +185,12 @@ public class UserInterface {
     public void displayMostPopularItem() {
         Statistics statistics = new Statistics();
         statistics.calculateMostOrderedItems(orderHistory.getAllOrdersList());
+    }
+
+    public void getTurnover() {
+        double turnover = orderHistory.getTurnover();
+
+        System.out.printf("Omsætning I ALT: %.2f \n", turnover);
     }
 
     public Order handleIDInput() {
