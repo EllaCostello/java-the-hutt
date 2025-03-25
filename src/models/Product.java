@@ -13,6 +13,10 @@ public class Product {
         this.productNumber = productNumber;
         this.ingredients = ingredients;
     }
+
+    public Product() {
+
+    }
     public String getName() { return name; }
 
     public int getProductNumber() { return productNumber; }
@@ -35,11 +39,11 @@ public class Product {
     public String toStringForMenu() {
         if (productNumber < 10) {
             return """
-                    %-85s %.0f
-                    \033[3m%s\033[0m""".formatted(name, price, ingredients);
+                    %d. %-85s %.0f
+                    \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
         }
         return """
-                %-84s %.0f
-                \033[3m%s\033[0m""".formatted(name, price, ingredients);
+                %d. %-84s %.0f
+                \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
     }
 }
