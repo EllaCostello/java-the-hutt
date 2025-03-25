@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 // Authors Theis and Niklas
 public class Order {
-    private Product product = new Product();
+    // private Product product = new Product();
     private OrderStatus orderstatus;
     private LocalDateTime pickupTime;
     private ArrayList<Product> orderList;
@@ -30,7 +30,7 @@ public class Order {
     public ArrayList<Product> getOrderList() {
         return orderList;
     }
-
+    /*
     public void addProductToOrder(int productNumber) {
         if (productNumber > 0 && productNumber <= product.getProducts().size()) {
             orderList.add(product.getProducts().get(productNumber - 1));
@@ -42,6 +42,8 @@ public class Order {
         }
 
     }
+
+     */
 
     public int getId() {
         return id; // har tilføjet getter for iD hvis det er nødvendigt
@@ -99,7 +101,7 @@ public class Order {
             }
         }
     }
-
+    /*
     public String getIngredient(int productNumber) {
         for (Product p : orderList) {
             if (p.getProductNumber() == productNumber) {
@@ -108,12 +110,14 @@ public class Order {
         }return "-1";
     }
 
+     */
+
     public static OrderHistory getOrderHistory() {
         return orderHistory;
     }
 
 
-
+    /*
     public String toString() {
         double updatedTotal = calculateFullPrice();
 
@@ -129,4 +133,6 @@ public class Order {
                 "________________________________________________________________________";
 
     }
+
+     */
 }

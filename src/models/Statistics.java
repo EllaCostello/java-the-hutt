@@ -51,10 +51,10 @@ public class Statistics {
             }
         }
 
-        Product product = new Product();
-        String productName = product.getProducts().get(mostPopularProductNumber - 1).toString();
+        // Product product = new Product();
+        // String productName = product.getProducts().get(mostPopularProductNumber - 1).toString();
 
-        System.out.println("Mest populære produkt: " + productName);
+        // System.out.println("Mest populære produkt: " + productName);
         System.out.println("Bestilt " + maxCount + " gange");
     }
 }

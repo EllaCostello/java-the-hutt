@@ -7,8 +7,9 @@ import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
-    private Product productMenu = new Product();
+    // private Product productMenu = new Product();
     private OrderHistory orderHistory = new OrderHistory();
+    Menu menu = new Menu();
 
     public UserInterface() { }
 
@@ -46,7 +47,7 @@ public class UserInterface {
 
             switch (choice) {
                 case 1:
-                    displayMenu();
+                    menu.displayMenu();
                     break;
                 case 2:
                     displayOrderList();
@@ -81,7 +82,7 @@ public class UserInterface {
             printMainMenu();
         }
     }
-
+    /*
     public void displayMenu() {
         System.out.print("""
                                              ----------------                                          ------
@@ -92,6 +93,8 @@ public class UserInterface {
             System.out.println(product.getProductNumber() + ". " + product.productMenu());
         }
     }
+
+     */
 
 
     public void displayOrderList() {
@@ -130,7 +133,7 @@ public class UserInterface {
             if (pizzaNum == 0) {
                 addingPizzas = false;
             } else {
-                newOrder.addProductToOrder(pizzaNum);
+                // newOrder.addProductToOrder(pizzaNum);
             }
         }
 
