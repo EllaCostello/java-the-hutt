@@ -42,4 +42,8 @@ public class Product {
                 %d. %-84s %.0f
                 \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
     }
+
+    public void setPrice(double newPrice) {
+        this.price = newPrice;
+    }
 }

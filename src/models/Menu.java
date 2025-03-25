@@ -68,6 +68,7 @@ public class Menu {
         products.add(newProduct);
         System.out.println("Product added successfully!");
     }
+
     public void removeProductFromMenu() {
         System.out.print("indtast produktets IDnummer: ");
         Scanner scanner = new Scanner(System.in);
@@ -80,6 +81,24 @@ public class Menu {
             System.out.println("Produktet er blevet fjernet!");
         } else {
             System.out.println("Produktet blev ikke fundet!");
+        }
+    }
+    public void updateProductPrice() {
+        System.out.print("Enter the product number to update price: ");
+        Scanner scanner = new Scanner(System.in);
+        int productNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        Product productToUpdate = findProductByNumber(productNumber);
+        if (productToUpdate != null) {
+            System.out.print("Enter the new price: ");
+            double newPrice = scanner.nextDouble();
+            scanner.nextLine(); // Consume newline
+
+            productToUpdate.setPrice(newPrice);
+            System.out.println("Price updated successfully!");
+        } else {
+            System.out.println("Product not found!");
         }
     }
 
