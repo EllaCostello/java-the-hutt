@@ -10,12 +10,14 @@ import java.util.ArrayList;
 // Authors Theis and Niklas
 public class Order {
     private Product product = new Product();
+    Menu menu = new Menu();
     private ArrayList<OrderLine> order;
     private OrderLine orderline;
+    //    private ArrayList<Product> orderList;
+    private ArrayList<OrderLine> orderList;
     private OrderStatus orderstatus;
     private LocalDateTime pickupTime;
-//    private ArrayList<Product> orderList;
-    private ArrayList<OrderLine> orderList;
+
     private static int lasId = 0; // sætter static så alle instances kan se den
     private int id;
     private double total = 0.0;
@@ -35,9 +37,10 @@ public class Order {
     }
 
     public void addProductToOrder(int productNumber) {
-        if (productNumber > 0 && productNumber <= product.getProducts().size()) {
+
+        if (productNumber > 0 && productNumber <= menu.getProducts().size()) {
 //            orderList.add(product.getProducts().get(productNumber - 1));
-            Product selectedProduct = product.getProducts().get(productNumber - 1);
+            Product selectedProduct = menu.getProducts().get(productNumber - 1);
             OrderLine order = new OrderLine(selectedProduct);
             orderList.add(order);
             System.out.println("Ordren har nu: " + orderList);
@@ -46,6 +49,7 @@ public class Order {
         } else {
             System.out.println("Produkt med dette nummer eksisterer ikke.");
         }
+
     }
 
     public int getId() {
@@ -75,6 +79,9 @@ public class Order {
     }
 
     public String printCurrentOrder() {
+        System.out.println("Ordre: ");
+        for (Product p : orderList) {
+            System.out.println(p);
         System.out.println("models.Order: ");
 //        for (Product p : orderList) {
 //            System.out.println(p);
@@ -101,26 +108,25 @@ public class Order {
         }
     }
 
-//    public ArrayList<Order> getActiveOrders() {
-//        return activeOrders;
-//    }
-//    public void setIngredient(int productNumber, String ingredient) {
-//        for (Product p : orderList) {
-//            if (p.getProductNumber() == productNumber) {
-//                p.setIngredient(ingredient);
-//
-//            }
-//        }
-//
-//    }
-//
-//    public String getIngredient(int productNumber) {
-//        for (Product p : orderList) {
-//            if (p.getProductNumber() == productNumber) {
-//                return p.getIngredient();
-//            }
-//        }return "-1";
-//    }
+    public ArrayList<Order> getActiveOrders() {
+        return activeOrders;
+    }
+    public void setIngredient(int productNumber, String ingredient) {
+        for (Product p : orderList) {
+            if (p.getProductNumber() == productNumber) {
+                p.setIngredient(ingredient);
+
+            }
+        }
+    }
+
+    public String getIngredient(int productNumber) {
+        for (Product p : orderList) {
+            if (p.getProductNumber() == productNumber) {
+                return p.getIngredients();
+            }
+        }return "-1";
+    }
 
     public static OrderHistory getOrderHistory() {
         return orderHistory;

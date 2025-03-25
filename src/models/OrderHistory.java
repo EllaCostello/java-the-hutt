@@ -9,6 +9,15 @@ public class OrderHistory {
         return allOrders;
     }
 
+    public Order getOrderByID(int orderID) {
+        for (Order order : allOrders) {
+            if (orderID == order.getId()) {
+                return order;
+            }
+        }
+        return null;
+    }
+
     public void getAllOrders() {
         for (Order order : allOrders) {
             System.out.println(order);

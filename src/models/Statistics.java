@@ -51,8 +51,8 @@ public class Statistics {
             }
         }
 
-        Product product = new Product();
-        String productName = product.getProducts().get(mostPopularProductNumber - 1).toString();
+        Menu menu = new Menu();
+        String productName = menu.getProducts().get(mostPopularProductNumber - 1).toString();
 
         System.out.println("Mest populære produkt: " + productName);
         System.out.println("Bestilt " + maxCount + " gange");
