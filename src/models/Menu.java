@@ -84,21 +84,21 @@ public class Menu {
         }
     }
     public void updateProductPrice() {
-        System.out.print("Enter the product number to update price: ");
+        System.out.print("indtast produktets IDnummer for at opdatere prisen: ");
         Scanner scanner = new Scanner(System.in);
         int productNumber = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
         Product productToUpdate = findProductByNumber(productNumber);
         if (productToUpdate != null) {
-            System.out.print("Enter the new price: ");
+            System.out.print("indtast den nye pris: ");
             double newPrice = scanner.nextDouble();
             scanner.nextLine(); // Consume newline
 
             productToUpdate.setPrice(newPrice);
-            System.out.println("Price updated successfully!");
+            System.out.println("Pris ændret!");
         } else {
-            System.out.println("Product not found!");
+            System.out.println("produktet blev ikke fundet!");
         }
     }
 
