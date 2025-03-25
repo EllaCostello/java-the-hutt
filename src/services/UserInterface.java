@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
+    OrderManager orderManager = new OrderManager();
     private Product productMenu = new Product();
     private OrderHistory orderHistory = new OrderHistory();
 
@@ -52,7 +53,7 @@ public class UserInterface {
                     displayOrderList();
                     break;
                 case 3:
-                    createOrder();
+                    orderManager.createOrder();
                     break;
                 case 4:
                     viewOrderDetails();
@@ -89,7 +90,7 @@ public class UserInterface {
                                              ----------------                                          ------
                 """);
         for (Product product : productMenu.getProducts()) {
-            System.out.println(product.getProductNumber() + ". " + product.productMenu());
+            System.out.println(product.getProductNumber() + ". " + product.toStringForMenu());
         }
     }
 
@@ -113,7 +114,7 @@ public class UserInterface {
         }
     }
 
-
+    /*
     public void createOrder() {
         System.out.println("Indtast afhentningstid i minutter:");
         int pickupTime = scanner.nextInt();
@@ -138,6 +139,8 @@ public class UserInterface {
         System.out.println(newOrder);
         orderHistory.addToHistory(newOrder);
     }
+
+     */
 
     public void completeOrder() {
         displayOrderList();

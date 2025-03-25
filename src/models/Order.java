@@ -103,7 +103,7 @@ public class Order {
     public String getIngredient(int productNumber) {
         for (Product p : orderList) {
             if (p.getProductNumber() == productNumber) {
-                return p.getIngredient();
+                return p.getIngredients();
             }
         }return "-1";
     }
