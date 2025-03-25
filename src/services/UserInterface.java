@@ -55,6 +55,7 @@ public class UserInterface {
                     createOrder();
                     break;
                 case 4:
+//                    productMenu.modifyProduct(1, 100);
                     viewOrderDetails();
                     break;
                 case 5:

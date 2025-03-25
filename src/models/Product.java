@@ -86,7 +86,22 @@ public class Product {
 
     public int getProductNumber() {return productNumber; }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void modifyProduct(int productNumber, double price) {
+
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProductNumber() == productNumber) {
+                products.get(i).setPrice(price);
+            }
+        }
+    }
 
     public void showProducts() {
         for (Product p : products) {

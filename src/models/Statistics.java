@@ -34,12 +34,12 @@ public class Statistics {
 
         int[] productCount = new int[31];
 
-        for (Order order : allTimeOrders) {
-            for (Product product : order.getOrderList()) {
-                int productNumber = product.getProductNumber();
-                productCount[productNumber]++;
-            }
-        }
+//        for (Order order : allTimeOrders) {
+//            for (Product product : order.getOrderList()) {
+//                int productNumber = product.getProductNumber();
+//                productCount[productNumber]++;
+//            }
+//        }
 
         int maxCount = 0;
         int mostPopularProductNumber = 0;
