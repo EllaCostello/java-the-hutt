@@ -10,6 +10,7 @@ import java.util.ArrayList;
 // Authors Theis and Niklas
 public class Order {
     private Product product = new Product();
+    Menu menu = new Menu();
     private OrderStatus orderstatus;
     private LocalDateTime pickupTime;
     private ArrayList<Product> orderList;
@@ -32,8 +33,8 @@ public class Order {
     }
 
     public void addProductToOrder(int productNumber) {
-        if (productNumber > 0 && productNumber <= product.getProducts().size()) {
-            orderList.add(product.getProducts().get(productNumber - 1));
+        if (productNumber > 0 && productNumber <= menu.getProducts().size()) {
+            orderList.add(menu.getProducts().get(productNumber - 1));
             System.out.println("Ordren har nu: " + orderList);
             this.total += product.getPrice();
 
@@ -65,7 +66,7 @@ public class Order {
     }
 
     public String printCurrentOrder() {
-        System.out.println("models.Order: ");
+        System.out.println("Ordre: ");
         for (Product p : orderList) {
             System.out.println(p);
         }
@@ -103,7 +104,7 @@ public class Order {
     public String getIngredient(int productNumber) {
         for (Product p : orderList) {
             if (p.getProductNumber() == productNumber) {
-                return p.getIngredient();
+                return p.getIngredients();
             }
         }return "-1";
     }

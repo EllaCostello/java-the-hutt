@@ -7,7 +7,9 @@ import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
-    private Product productMenu = new Product();
+    OrderManager orderManager = new OrderManager();
+    // private Product productMenu = new Product();
+    private Menu menu = new Menu();
     private OrderHistory orderHistory = new OrderHistory();
 
     public UserInterface() { }
@@ -46,22 +48,22 @@ public class UserInterface {
 
             switch (choice) {
                 case 1:
-                    displayMenu();
+                    menu.displayMenu();
                     break;
                 case 2:
-                    displayOrderList();
+                    orderManager.displayOrderList();
                     break;
                 case 3:
-                    createOrder();
+                    orderManager.createOrder();
                     break;
                 case 4:
-                    viewOrderDetails();
+                    orderManager.viewOrderDetails();
                     break;
                 case 5:
-                    completeOrder();
+                    orderManager.completeOrder();
                     break;
                 case 6:
-                    cancelOrder();
+                    orderManager.cancelOrder();
                     break;
                 case 7:
                     displayMostPopularItem();
@@ -82,110 +84,6 @@ public class UserInterface {
         }
     }
 
-    public void displayMenu() {
-        System.out.print("""
-                                             ----------------                                          ------
-                                            |    Menukort    |                                        | Pris |
-                                             ----------------                                          ------
-                """);
-        for (Product product : productMenu.getProducts()) {
-            System.out.println(product.getProductNumber() + ". " + product.productMenu());
-        }
-    }
-
-
-    public void displayOrderList() {
-        ArrayList<Order> allOrdersSorted = orderHistory.getAllOrdersList();
-
-        if (!allOrdersSorted.isEmpty()) {
-            System.out.println("""
-                                              ------------------
-                                             |   Aktive Ordre  |
-                                              ------------------
-                    """);
-
-            allOrdersSorted.stream()
-                    .filter(order -> order.getOrderstatus() == OrderStatus.IN_PROGRESS)
-                    .sorted(Comparator.comparing(Order::getPickupTime))
-                    .forEach(System.out::println);
-        } else {
-            System.out.println("Der er ingen aktive ordre");
-        }
-    }
-
-
-    public void createOrder() {
-        System.out.println("Indtast afhentningstid i minutter:");
-        int pickupTime = scanner.nextInt();
-        scanner.nextLine();
-
-        Order newOrder = new Order(pickupTime);
-        boolean addingPizzas = true;
-
-        while (addingPizzas) {
-            System.out.println("Indtast product nummer (0 for at afslutte):");
-            int pizzaNum = scanner.nextInt();
-            scanner.nextLine();
-
-            if (pizzaNum == 0) {
-                addingPizzas = false;
-            } else {
-                newOrder.addProductToOrder(pizzaNum);
-            }
-        }
-
-        System.out.println("Din ordre:");
-        System.out.println(newOrder);
-        orderHistory.addToHistory(newOrder);
-    }
-
-    public void completeOrder() {
-        displayOrderList();
-
-        System.out.println("""
-                Indtast venligst ID på den ordre du gerne vil færdiggøre:\s""");
-
-        Order orderToComplete = handleIDInput();
-
-        if (orderToComplete != null) {
-            orderToComplete.setOrderstatus(OrderStatus.COMPLETED);
-            System.out.println("Ordre med ID: " + orderToComplete.getId() + " er nu færdiggjort");
-        }
-    }
-
-    public void viewOrderDetails() {
-        System.out.println("Indtast venligst ID på den ordre du gerne vil se: ");
-
-        Order orderToView = handleIDInput();
-
-        if (orderToView != null) {
-            System.out.println(orderToView);
-        }
-    }
-
-    public void cancelOrder() {
-        System.out.println("Indtast venlig ID på den ordre der skal annuleres: ");
-
-        Order orderToCancel = handleIDInput();
-
-        if (orderToCancel != null) {
-            System.out.println("DU ER VED AT ANNULERE DENNE ORDRE:");
-            System.out.println(orderToCancel);
-            System.out.println("""
-                    1. BEKRÆFT
-                    2. FOTRYD
-                    """);
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            if (choice == 1) {
-                orderHistory.getAllOrdersList().remove(orderToCancel);
-                System.out.println("Ordren er blevet annuleret");
-            }
-        }
-    }
-
     public void displayMostPopularItem() {
         Statistics statistics = new Statistics();
         statistics.calculateMostOrderedItems(orderHistory.getAllOrdersList());
@@ -193,29 +91,7 @@ public class UserInterface {
 
     public void getTurnover() {
         double turnover = orderHistory.getTurnover();
-
         System.out.printf("Omsætning I ALT: %.2f \n", turnover);
     }
 
-    public Order handleIDInput() {
-        int chosenID;
-
-        while (true) {
-            if (!scanner.hasNextInt()) {
-                System.out.println("Vi kunne ikke forstå dit ønske, prøv venligst igen: ");
-                scanner.nextLine();
-                continue;
-            }
-
-            chosenID = scanner.nextInt();
-            scanner.nextLine();
-
-            for (Order order : orderHistory.getAllOrdersList()) {
-                if (order.getId() == chosenID) {
-                    return order;
-                }
-            }
-            System.out.println("Vi kunne ikke finde ordren tilknyttet dette ID, prøv venligst igen: ");
-        }
-    }
 }
