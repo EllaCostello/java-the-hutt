@@ -11,6 +11,7 @@ public class OrderManager {
     private OrderHistory orderHistory;
     private Menu menu = new Menu();
 
+
     public OrderManager(Menu menu) {
         this.orderHistory = new OrderHistory();
         this.menu = menu;
@@ -21,6 +22,7 @@ public class OrderManager {
         int productNumber = scanner.nextInt();
         scanner.nextLine();
         menu.findProductByNumber(productNumber).setPrice(scanner.nextDouble());
+
 
 
 

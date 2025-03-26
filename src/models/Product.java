@@ -24,7 +24,7 @@ public class Product {
     public double getPrice() { return price; }
 
     public void setPrice(double inputPrice) {
-        price = inputPrice;
+        this.price = inputPrice;
     }
 
     public String getIngredients() { return ingredients; }

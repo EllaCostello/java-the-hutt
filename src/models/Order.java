@@ -12,7 +12,6 @@ public class Order {
     private Product product = new Product();
     Menu menu = new Menu();
     private ArrayList<OrderLine> order;
-    private OrderLine orderline;
     //    private ArrayList<Product> orderList;
     private ArrayList<OrderLine> orderList;
     private OrderStatus orderstatus;
@@ -37,20 +36,33 @@ public class Order {
     }
 
     public void addProductToOrder(int productNumber) {
-
         if (productNumber > 0 && productNumber <= menu.getProducts().size()) {
-//            orderList.add(product.getProducts().get(productNumber - 1));
             Product selectedProduct = menu.getProducts().get(productNumber - 1);
-            OrderLine order = new OrderLine(selectedProduct);
-            orderList.add(order);
+            OrderLine order = new OrderLine(selectedProduct);  // Keep reference
+            orderList.add(order);  // No need to update price manually
+            this.total += order.getCurrentPrice();  // Dynamically fetches latest price
             System.out.println("Ordren har nu: " + orderList);
-            this.total += order.getCurrentPrice();
-
         } else {
             System.out.println("Produkt med dette nummer eksisterer ikke.");
         }
-
     }
+//    public void addProductToOrder(int productNumber) {
+//
+//        if (productNumber > 0 && productNumber <= menu.getProducts().size()) {
+//
+////            orderList.add(product.getProducts().get(productNumber - 1));
+//            Product selectedProduct = menu.getProducts().get(productNumber - 1);
+//            OrderLine order = new OrderLine(selectedProduct);
+//            orderList.add(order);
+//            order.updatePrice();
+//            this.total += order.getCurrentPrice();
+//            System.out.println("Ordren har nu: " + orderList);
+//
+//        } else {
+//            System.out.println("Produkt med dette nummer eksisterer ikke.");
+//        }
+//
+//    }
 
     public int getId() {
         return id; // har tilføjet getter for iD hvis det er nødvendigt

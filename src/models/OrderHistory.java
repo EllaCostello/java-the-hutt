@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class OrderHistory {
     private final ArrayList<Order> allOrders = new ArrayList<>();
-
     public ArrayList<Order> getAllOrdersList() {
         return allOrders;
     }

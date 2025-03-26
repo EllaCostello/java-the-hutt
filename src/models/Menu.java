@@ -2,10 +2,11 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Menu {
     private ArrayList<Product> products;
-
+    Scanner scanner = new Scanner(System.in);
     public Menu() {
         products = new ArrayList<>();
         initializeMenu();
@@ -63,7 +64,60 @@ public class Menu {
         }
         return null;
     }
+    public void addProductToMenu() {
+        System.out.print("Skriv produktets nummer: ");
+        Scanner scanner = new Scanner(System.in);
+        int productNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
 
+        System.out.print("indstast navn på Produkt: ");
+        String name = scanner.nextLine();
+
+        System.out.print("indtast beløb på produkt: ");
+        double price = scanner.nextDouble();
+        scanner.nextLine(); // Consume newline
+
+        System.out.print("indtast beskrivelse på produkt: ");
+        String description = scanner.nextLine();
+
+        Product newProduct = new Product(productNumber, price, name, description);
+        products.add(newProduct);
+        System.out.println("Product added successfully!");
+    }
+
+    public void removeProductFromMenu() {
+        System.out.print("indtast produktets IDnummer: ");
+        Scanner scanner = new Scanner(System.in);
+        int productNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        Product productToRemove = findProductByNumber(productNumber);
+        if (productToRemove != null) {
+            products.remove(productToRemove);
+            System.out.println("Produktet er blevet fjernet!");
+        } else {
+            System.out.println("Produktet blev ikke fundet!");
+        }
+    }
+
+    public void updateProductPrice() {
+        System.out.print("indtast produktets ID nummer for at opdatere prisen: ");
+        Scanner scanner = new Scanner(System.in);
+        int productNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        Product productToUpdate = findProductByNumber(productNumber);
+        if (productToUpdate != null) {
+            System.out.print("indtast den nye pris: ");
+            double newPrice = scanner.nextDouble();
+            scanner.nextLine(); // Consume newline
+
+            productToUpdate.setPrice(newPrice);
+            System.out.println("Pris ændret!");
+        } else {
+            System.out.println("produktet blev ikke fundet!");
+        }
+    }
     public void displayMenu() {
         System.out.println("""
                                              ----------------                                          ------
