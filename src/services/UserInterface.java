@@ -1,18 +1,15 @@
 package services;
 
 import models.*;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
-public class UserInterface {
-    Scanner scanner = new Scanner(System.in);
-    OrderManager orderManager = new OrderManager();
-    // private Product productMenu = new Product();
-    private Menu menu = new Menu();
-    private OrderHistory orderHistory = new OrderHistory();
 
-    public UserInterface() { }
+public class UserInterface {
+    private final Scanner scanner = new Scanner(System.in);
+    private final OrderManager orderManager = new OrderManager();
+    private final Menu menu = new Menu();
+    private final OrderHistory orderHistory = new OrderHistory();
+
+    public UserInterface() {}
 
     public void printMainMenu() {
         System.out.println("""
@@ -27,7 +24,7 @@ public class UserInterface {
                 4. Vis ordredetaljer
                 5. Færdiggør ordre
                 6. Annuller ordre
-                7. Se mest populære product
+                7. Se mest populære produkter (Top 3)
                 8. Se total omsætning
                 9. Afslut program
                 
@@ -41,57 +38,67 @@ public class UserInterface {
             System.out.print("Vi kunne ikke forstå dit ønske, prøv igen: ");
             scanner.next();
         }
-        boolean running = true;
-        while (running) {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    menu.displayMenu();
-                    break;
-                case 2:
-                    orderManager.displayOrderList();
-                    break;
-                case 3:
-                    orderManager.createOrder();
-                    break;
-                case 4:
-                    orderManager.viewOrderDetails();
-                    break;
-                case 5:
-                    orderManager.completeOrder();
-                    break;
-                case 6:
-                    orderManager.cancelOrder();
-                    break;
-                case 7:
-                    displayMostPopularItem();
-                    break;
-                case 8:
-                    getTurnover();
-                    break;
-                case 9:
-                    running = false;
-                    System.out.println("Afslutter programmet...");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Ugyldig valg. Prøv igen.");
-            }
+        int choice = scanner.nextInt();
+        scanner.nextLine();
 
-            printMainMenu();
+        switch (choice) {
+            case 1:
+                menu.displayMenu();
+                break;
+            case 2:
+                orderManager.displayOrderList();
+                break;
+            case 3:
+                orderManager.createOrder();
+                break;
+            case 4:
+                orderManager.viewOrderDetails();
+                break;
+            case 5:
+                orderManager.completeOrder();
+                break;
+            case 6:
+                orderManager.cancelOrder();
+                break;
+            case 7:
+                showPopularPizzas();
+                break;
+            case 8:
+                showTurnover();
+                break;
+            case 9:
+                System.out.println("Afslutter programmet...");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Ugyldig valg. Prøv igen.");
+        }
+
+        // Return to menu after action (Added for nicer flow - Gustav)
+        pressEnterToContinue();
+        printMainMenu();
+    }
+
+    private void showPopularPizzas() {
+        Statistics stats = new Statistics();
+        stats.collectAllTimeOrders();
+
+        if (stats.getAllTimeOrders().isEmpty()) {
+            System.out.println("\nIngen ordrer at analysere endnu.");
+        } else {
+            System.out.println("\n--- Top 3 mest populære produkter ---");
+            stats.printTop3MostPopularPizzas(stats.getAllTimeOrders());
         }
     }
 
-    public void displayMostPopularItem() {
-        Statistics statistics = new Statistics();
-        statistics.calculateMostOrderedItems(orderHistory.getAllOrdersList());
-    }
-
-    public void getTurnover() {
+    private void showTurnover() {
         double turnover = orderHistory.getTurnover();
-        System.out.printf("Omsætning I ALT: %.2f \n", turnover);
+        System.out.printf("\nTotal omsætning: %.2f kr.\n", turnover);
     }
 
+    private void pressEnterToContinue() {
+        System.out.print("\nTryk Enter for at fortsætte...");
+        scanner.nextLine();
+    }
 }
