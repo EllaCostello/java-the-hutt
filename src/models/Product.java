@@ -23,13 +23,8 @@ public class Product {
 
     public double getPrice() { return price; }
 
-    public void modifyProduct(int productNumber, double price) {
-
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProductNumber() == productNumber) {
-                products.get(i).setPrice(price);
-            }
-        }
+    public void setPrice(double inputPrice) {
+        price = inputPrice;
     }
 
     public String getIngredients() { return ingredients; }
@@ -48,10 +43,10 @@ public class Product {
         if (productNumber < 10) {
             return """
                     %d. %-85s %.0f
-                    \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
+                    \033[3m%s\033[0m""".formatted(productNumber, name, getPrice(), ingredients);
         }
         return """
                 %d. %-84s %.0f
-                \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
+                \033[3m%s\033[0m""".formatted(productNumber, name, getPrice(), ingredients);
     }
 }

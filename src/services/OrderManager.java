@@ -1,9 +1,6 @@
 package services;
 
-import models.Menu;
-import models.Order;
-import models.OrderHistory;
-import models.OrderStatus;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,12 +9,26 @@ import java.util.Scanner;
 public class OrderManager {
     private Scanner scanner;
     private OrderHistory orderHistory;
-    private Menu menu;
+    private Menu menu = new Menu();
 
-    public OrderManager() {
+    public OrderManager(Menu menu) {
         this.orderHistory = new OrderHistory();
-        this.menu = new Menu();
+        this.menu = menu;
         this.scanner = new Scanner(System.in);
+    }
+    public void modifyProduct() {
+        System.out.println("enter product nmbr of prod to change");
+        int productNumber = scanner.nextInt();
+        scanner.nextLine();
+        menu.findProductByNumber(productNumber).setPrice(scanner.nextDouble());
+
+
+
+//        for (int i = 0; i < menu.size(); i++) {
+//            if (menu.get(i).getProductNumber() == productNumber) {
+//                menu.get(i).setPrice(price);
+//            }
+//        }
     }
 
     public void createOrder() {

@@ -45,15 +45,23 @@ public class Menu {
 
     }
 
-    public List<Product> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
+//    public Product findProductByNumber(int productNumber) {
+//        return products.stream()
+//                .filter(p -> p.getProductNumber() == productNumber)
+//                .findFirst()
+//                .orElse(null);
+//    }
     public Product findProductByNumber(int productNumber) {
-        return products.stream()
-                .filter(p -> p.getProductNumber() == productNumber)
-                .findFirst()
-                .orElse(null);
+        for (Product product : getProducts()) {
+            if (product.getProductNumber() == productNumber) {
+                return product;
+            }
+        }
+        return null;
     }
 
     public void displayMenu() {

@@ -30,11 +30,11 @@ public class OrderHistory {
 
     public double getTurnover() {
         double turnover = 0;
-
+        System.out.println(allOrders);
         for (Order order : allOrders) {
             turnover += order.calculateFullPrice();
         }
-
+        System.out.println("i getTurnover i OrderHistory");
         return turnover;
     }
 }

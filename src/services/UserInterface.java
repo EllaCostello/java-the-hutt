@@ -7,11 +7,11 @@ import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
-    OrderManager orderManager = new OrderManager();
+
     // private Product productMenu = new Product();
     private Menu menu = new Menu();
+    OrderManager orderManager = new OrderManager(menu);
     private OrderHistory orderHistory = new OrderHistory();
-
     public UserInterface() { }
 
     public void printMainMenu() {
@@ -72,6 +72,9 @@ public class UserInterface {
                     getTurnover();
                     break;
                 case 9:
+                    orderManager.modifyProduct();
+                    break;
+                case 10:
                     running = false;
                     System.out.println("Afslutter programmet...");
                     System.exit(0);

@@ -4,11 +4,13 @@ public class OrderLine {
     private double currentPrice;
     private String currentName;
     private String currentIngredience;
+    private int currentProductNumber;
 
     public OrderLine(Product product) {
         this.currentPrice = product.getPrice();
         this.currentName = product.getName();
-        this.currentIngredience = product.getIngredient();
+        this.currentIngredience = product.getIngredients();
+        this.currentProductNumber = product.getProductNumber();
     }
 
     public double getCurrentPrice() {
@@ -18,11 +20,15 @@ public class OrderLine {
     public String getCurrentName() {
         return currentName;
     }
+    public int getProductNumber() {
+        return currentProductNumber;
+    }
+
 
     public String getCurrentIngredience() {
         return currentIngredience;
     }
     public String toString() {
-        return "name " + currentName + " price " + currentPrice + " ingredience " + currentIngredience;
+        return currentProductNumber + ". " + currentName + ", pris: " + currentPrice;
     }
 }

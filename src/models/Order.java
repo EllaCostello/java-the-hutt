@@ -66,6 +66,7 @@ public class Order {
         for (OrderLine orderLine : orderList) {
             total += orderLine.getCurrentPrice(); // ændre her
         }
+        System.out.println("total " + total);
         return total;
     }
 
@@ -80,12 +81,6 @@ public class Order {
 
     public String printCurrentOrder() {
         System.out.println("Ordre: ");
-        for (Product p : orderList) {
-            System.out.println(p);
-        System.out.println("models.Order: ");
-//        for (Product p : orderList) {
-//            System.out.println(p);
-//        }
         for (OrderLine o : orderList) {
             System.out.println(o);
         }
@@ -111,21 +106,25 @@ public class Order {
     public ArrayList<Order> getActiveOrders() {
         return activeOrders;
     }
-    public void setIngredient(int productNumber, String ingredient) {
-        for (Product p : orderList) {
-            if (p.getProductNumber() == productNumber) {
-                p.setIngredient(ingredient);
+//    public void setIngredient(int productNumber, String ingredient) {
+//        for (Product p : orderList) {
+//            if (p.getProductNumber() == productNumber) {
+//                p.setIngredient(ingredient);
+//
+//            }
+//        }
+//    }
+//
+//    public String getIngredient(int productNumber) {
+//        for (Product p : orderList) {
+//            if (p.getProductNumber() == productNumber) {
+//                return p.getIngredients();
+//            }
+//        }return "-1";
+//    }
 
-            }
-        }
-    }
-
-    public String getIngredient(int productNumber) {
-        for (Product p : orderList) {
-            if (p.getProductNumber() == productNumber) {
-                return p.getIngredients();
-            }
-        }return "-1";
+    public static void setOrderHistory(OrderHistory sharedOrderHistory) {
+        orderHistory = sharedOrderHistory;
     }
 
     public static OrderHistory getOrderHistory() {
