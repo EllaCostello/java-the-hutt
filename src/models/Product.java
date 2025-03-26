@@ -8,16 +8,16 @@ public class Product {
     // name String
     private double price;
     // Price Double
-    private int productNumber;
+    private int number;
     private String ingredients;
 
     private ArrayList<Product> products;
 
-    public Product(int productNumber, double price, String name, String ingredients) {
+    public Product(int Number, double price, String name, String ingredients) {
         this.ingredients = ingredients;
         this.name = name;
         this.price = price;
-        this.productNumber = productNumber;
+        this.number = Number;
 
     }
 
@@ -84,7 +84,7 @@ public class Product {
 
 
 
-    public int getProductNumber() {return productNumber; }
+    public int getNumber() {return number; }
 
 
 
@@ -96,12 +96,12 @@ public class Product {
 
     @Override
     public String toString() {
-        return  productNumber + ". " + name + ", pris: " + price;
+        return  number + ". " + name + ", pris: " + price;
     }
 
 
     public String productMenu() {
-        if (productNumber < 10) {
+        if (number < 10) {
             return """
                     %-85s %.0f
                     \033[3m%s\033[0m""".formatted(name, price, ingredients);
@@ -114,4 +114,27 @@ public class Product {
 //getters and setters
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
 }

@@ -89,7 +89,7 @@ public class UserInterface {
                                              ----------------                                          ------
                 """);
         for (Product product : productMenu.getProducts()) {
-            System.out.println(product.getProductNumber() + ". " + product.productMenu());
+            System.out.println(product.getNumber() + ". " + product.productMenu());
         }
     }
 

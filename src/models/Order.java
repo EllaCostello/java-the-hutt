@@ -93,7 +93,7 @@ public class Order {
     }
     public void setIngredient(int productNumber, String ingredient) {
         for (Product p : orderList) {
-            if (p.getProductNumber() == productNumber) {
+            if (p.getNumber() == productNumber) {
                 p.setIngredient(ingredient);
 
             }
@@ -102,7 +102,7 @@ public class Order {
 
     public String getIngredient(int productNumber) {
         for (Product p : orderList) {
-            if (p.getProductNumber() == productNumber) {
+            if (p.getNumber() == productNumber) {
                 return p.getIngredient();
             }
         }return "-1";

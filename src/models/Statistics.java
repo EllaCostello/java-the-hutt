@@ -36,7 +36,7 @@ public class Statistics {
 
         for (Order order : allTimeOrders) {
             for (Product product : order.getOrderList()) {
-                int productNumber = product.getProductNumber();
+                int productNumber = product.getNumber();
                 productCount[productNumber]++;
             }
         }
