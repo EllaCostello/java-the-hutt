@@ -1,49 +1,48 @@
 package models;
 
-// Authors Theis and Niklas
 public class Product {
-    private String name;
+    private final String NAME;
     private double price;
-    private int productNumber;
-    private String ingredients;
+    private final int PRODUCT_NUMBER;
+    private final String INGREDIENTS;
 
-    public Product(int productNumber, double price, String name, String ingredients) {
-        this.name = name;
+    public Product(int productNumber, double price, String name,  String ingredients) {
+        this.PRODUCT_NUMBER = productNumber;
         this.price = price;
-        this.productNumber = productNumber;
-        this.ingredients = ingredients;
+        this.NAME = name;
+        this.INGREDIENTS = ingredients;
     }
 
-    public Product() {
-
+    public String getName() {
+        return NAME;
     }
-    public String getName() { return name; }
 
-    public int getProductNumber() { return productNumber; }
+    public double getPrice() {
+        return price;
+    }
 
-    public double getPrice() { return price; }
+    public void setPrice(double inputPrice) {
+        price = inputPrice;
+    }
 
-
-    public String getIngredients() { return ingredients; }
-
-    public void setIngredient(String ingredients) {
-        this.ingredients = ingredients;
+    public int getPRODUCT_NUMBER() {
+        return PRODUCT_NUMBER;
     }
 
     @Override
     public String toString() {
-        return  productNumber + ". " + name + ", pris: " + price;
+        return  PRODUCT_NUMBER + ". " + NAME + ", pris: " + price;
     }
 
 
     public String toStringForMenu() {
-        if (productNumber < 10) {
+        if (PRODUCT_NUMBER < 10) {
             return """
                     %d. %-85s %.0f
-                    \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
+                    \033[3m%s\033[0m""".formatted(PRODUCT_NUMBER, NAME, price, INGREDIENTS);
         }
         return """
                 %d. %-84s %.0f
-                \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
+                \033[3m%s\033[0m""".formatted(PRODUCT_NUMBER, NAME, price, INGREDIENTS);
     }
 }

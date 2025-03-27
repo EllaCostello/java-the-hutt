@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Menu {
     private ArrayList<Product> products;
@@ -45,15 +44,17 @@ public class Menu {
 
     }
 
-    public List<Product> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
     public Product findProductByNumber(int productNumber) {
-        return products.stream()
-                .filter(p -> p.getProductNumber() == productNumber)
-                .findFirst()
-                .orElse(null);
+        for (Product product : getProducts()) {
+            if (product.getPRODUCT_NUMBER() == productNumber) {
+                return product;
+            }
+        }
+        return null;
     }
 
     public void displayMenu() {
