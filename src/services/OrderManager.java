@@ -7,110 +7,114 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class OrderManager {
-    private Scanner scanner;
-    private OrderHistory orderHistory;
-    private Menu menu = new Menu();
+    private final Menu menu;
+    private final ArrayList<Order> activeOrders;
+    private final OrderStatistics orderStatistics;
+    Scanner scanner;
 
     public OrderManager(Menu menu) {
-        this.orderHistory = new OrderHistory();
         this.menu = menu;
+        this.activeOrders = new ArrayList<>();
+        this.orderStatistics = new OrderStatistics();
         this.scanner = new Scanner(System.in);
-    }
-    public void modifyProduct() {
-        System.out.println("enter product nmbr of prod to change");
-        int productNumber = scanner.nextInt();
-        scanner.nextLine();
-        menu.findProductByNumber(productNumber).setPrice(scanner.nextDouble());
 
-
-
-//        for (int i = 0; i < menu.size(); i++) {
-//            if (menu.get(i).getProductNumber() == productNumber) {
-//                menu.get(i).setPrice(price);
-//            }
-//        }
     }
 
     public void createOrder() {
-        System.out.println("Indtast afhentningstid i minutter:");
+        System.out.print("Indtast afhentningstid i minutter: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Ugyldigt input, prøv igen: ");
+            scanner.next();
+        }
         int pickupTime = scanner.nextInt();
         scanner.nextLine();
 
-        Order newOrder = new Order(pickupTime);
+        Order order = new Order(pickupTime);
+
         boolean addingProducts = true;
-
         while (addingProducts) {
-            System.out.println("Indtast product nummer (0 for at afslutte):");
-
+            System.out.print("Indtast produktnummer (eller 0 for at afslutte): ");
             while (!scanner.hasNextInt()) {
-                System.out.println("Ugyldig Indtastning, prøv igen: ");
+                System.out.print("Ugyldigt input, prøv igen: ");
                 scanner.nextLine();
             }
-
-            int pizzaNum = scanner.nextInt();
+            int productNumber = scanner.nextInt();
             scanner.nextLine();
 
-            if (pizzaNum == 0) {
+            if (productNumber == 0) {
                 addingProducts = false;
-            } else {
-                newOrder.addProductToOrder(pizzaNum);
+                continue;
             }
-        }
 
-        System.out.println("Din ordre:");
-        System.out.println(newOrder);
-        orderHistory.addToHistory(newOrder);
-    }
+            Product product = menu.findProductByNumber(productNumber);
+            if (product == null) {
+                System.out.println("Produkt ikke fundet, prøv igen.");
+                continue;
+            }
 
-    public void cancelOrder() {
-        System.out.println("Indtast venlig ID på den ordre der skal annuleres: ");
-
-        Order orderToCancel = handleIDInput();
-
-        if (orderToCancel != null) {
-            System.out.println("DU ER VED AT ANNULERE DENNE ORDRE:");
-            System.out.println(orderToCancel);
-            System.out.println("""
-                    1. BEKRÆFT
-                    2. FOTRYD
-                    """);
-
-            int choice = scanner.nextInt();
+            System.out.print("Indtast antal: ");
+            while (!scanner.hasNextInt() || scanner.nextInt() != 0) {
+                System.out.print("Ugyldigt antal, prøv igen: ");
+                scanner.next();
+            }
+            int quantity = scanner.nextInt();
             scanner.nextLine();
 
-            if (choice == 1) {
-                orderHistory.getAllOrdersList().remove(orderToCancel);
-                System.out.println("Ordren er blevet annuleret");
-            }
+
+            order.addOrderLine(product, quantity);
+            System.out.println(quantity + " stk. " + product.getName() + " tilføjet til ordre." );
         }
+
+        activeOrders.add(order);
+        System.out.println("Ordre #" + order.getId() + " oprettet.");
+        System.out.println(order);
+
     }
 
     public void completeOrder() {
-        displayOrderList();
-
-        System.out.println("""
-                Indtast venligst ID på den ordre du gerne vil færdiggøre:\s""");
-
-        Order orderToComplete = handleIDInput();
-
-        if (orderToComplete != null) {
-            orderToComplete.setOrderstatus(OrderStatus.COMPLETED);
-            System.out.println("Ordre med ID: " + orderToComplete.getId() + " er nu færdiggjort");
+        System.out.print("Indtast ordre-ID der skal færdiggøres: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Ugyldigt input, prøv igen: ");
+            scanner.next();
         }
+        int orderId = scanner.nextInt();
+        scanner.nextLine();
+
+        Order orderToComplete = findOrder(orderId);
+        if (orderToComplete == null) {
+            System.out.println("Ordre ikke fundet.");
+            return;
+        }
+
+        activeOrders.remove(orderToComplete);
+        orderToComplete.setOrderStatus(OrderStatus.COMPLETED);
+        orderStatistics.addCompletedOrder(orderToComplete);
+        System.out.println("Ordre #" + orderToComplete.getId() + " færdiggjort.");
     }
 
-    public void viewOrderDetails() {
-        System.out.println("Indtast venligst ID på den ordre du gerne vil se: ");
+    public void cancelOrder() {
+        System.out.print("Indtast ordre-ID der skal annulleres: ");
 
-        Order orderToView = handleIDInput();
-
-        if (orderToView != null) {
-            System.out.println(orderToView);
+        Order orderToCancel = handleIDInput();
+        if (orderToCancel == null) {
+            System.out.println("Ordre ikke fundet.");
+            return;
         }
+
+        activeOrders.remove(orderToCancel);
+        orderToCancel.setOrderStatus(OrderStatus.CANCELLED);
+        System.out.println("Ordre #" + orderToCancel.getId() + " annulleret.");
+    }
+
+    private Order findOrder(int orderId) {
+        return activeOrders.stream()
+                .filter(o -> o.getId() == orderId)
+                .findFirst()
+                .orElse(null);
     }
 
     public void displayOrderList() {
-        ArrayList<Order> allOrdersSorted = orderHistory.getAllOrdersList();
+        ArrayList<Order> allOrdersSorted = activeOrders;
 
         if (!allOrdersSorted.isEmpty()) {
             System.out.println("""
@@ -120,12 +124,20 @@ public class OrderManager {
                     """);
 
             allOrdersSorted.stream()
-                    .filter(order -> order.getOrderstatus() == OrderStatus.IN_PROGRESS)
-                    .sorted(Comparator.comparing(Order::getPickupTime))
+                    .filter(order -> order.getOrderStatus() == OrderStatus.IN_PROGRESS)
+                    .sorted(Comparator.comparing(Order::getPickUpTime))
                     .forEach(System.out::println);
         } else {
             System.out.println("Der er ingen aktive ordre");
         }
+    }
+
+    public void displayMostPopularItem() {
+        orderStatistics.calculateMostOrderedItems();
+    }
+
+    public void displayTurnover() {
+        System.out.printf("Omsætning I ALT: %.2f kr.\n", orderStatistics.getTurnover());
     }
 
     public Order handleIDInput() {
@@ -141,10 +153,8 @@ public class OrderManager {
             chosenID = scanner.nextInt();
             scanner.nextLine();
 
-            for (Order order : orderHistory.getAllOrdersList()) {
-                if (order.getId() == chosenID) {
-                    return order;
-                }
+            if (findOrder(chosenID) != null) {
+                return findOrder(chosenID);
             }
             System.out.println("Vi kunne ikke finde ordren tilknyttet dette ID, prøv venligst igen: ");
         }

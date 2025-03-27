@@ -1,36 +1,32 @@
 package models;
 
-// Authors Theis and Niklas
 public class Product {
-    private String name;
+    private final String name;
     private double price;
-    private int productNumber;
-    private String ingredients;
+    private final int productNumber;
+    private final String ingredients;
 
-    public Product(int productNumber, double price, String name, String ingredients) {
-        this.name = name;
-        this.price = price;
+    public Product(int productNumber, double price, String name,  String ingredients) {
         this.productNumber = productNumber;
+        this.price = price;
+        this.name = name;
         this.ingredients = ingredients;
     }
 
-    public Product() {
-
+    public String getName() {
+        return name;
     }
-    public String getName() { return name; }
 
-    public int getProductNumber() { return productNumber; }
-
-    public double getPrice() { return price; }
+    public double getPrice() {
+        return price;
+    }
 
     public void setPrice(double inputPrice) {
         price = inputPrice;
     }
 
-    public String getIngredients() { return ingredients; }
-
-    public void setIngredient(String ingredients) {
-        this.ingredients = ingredients;
+    public int getProductNumber() {
+        return productNumber;
     }
 
     @Override
@@ -43,10 +39,10 @@ public class Product {
         if (productNumber < 10) {
             return """
                     %d. %-85s %.0f
-                    \033[3m%s\033[0m""".formatted(productNumber, name, getPrice(), ingredients);
+                    \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
         }
         return """
                 %d. %-84s %.0f
-                \033[3m%s\033[0m""".formatted(productNumber, name, getPrice(), ingredients);
+                \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
     }
 }

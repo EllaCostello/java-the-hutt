@@ -2,20 +2,15 @@ package services;
 
 import models.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
-
-    // private Product productMenu = new Product();
-    private Menu menu = new Menu();
-    OrderManager orderManager = new OrderManager(menu);
-    private OrderHistory orderHistory = new OrderHistory();
-    public UserInterface() { }
+    private final Menu menu = new Menu();
+    private final OrderManager orderManager = new OrderManager(menu);
 
     public void printMainMenu() {
-        System.out.println("""
+        while (true) {
+            System.out.println("""
                     ---------------
                    |     START     |
                     ---------------
@@ -24,77 +19,69 @@ public class UserInterface {
                 1. Vis menukort
                 2. Vis aktive ordre
                 3. Opret ny ordre
-                4. Vis ordredetaljer
-                5. Færdiggør ordre
-                6. Annuller ordre
-                7. Se mest populære product
-                8. Se total omsætning
+                4. Færdiggør ordre
+                5. Annuller ordre
+                6. Se mest populære produkt
+                7. Se total omsætning
+                8. Ændre prisen på et produkt
                 9. Afslut program
                 
                 Indtast valg her:\s""");
 
-        handleMenuChoice();
+            handleMenuChoice();
+        }
     }
 
-    public void handleMenuChoice() {
+    private void handleMenuChoice() {
         while (!scanner.hasNextInt()) {
             System.out.print("Vi kunne ikke forstå dit ønske, prøv igen: ");
             scanner.next();
         }
-        boolean running = true;
-        while (running) {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    menu.displayMenu();
-                    break;
-                case 2:
-                    orderManager.displayOrderList();
-                    break;
-                case 3:
-                    orderManager.createOrder();
-                    break;
-                case 4:
-                    orderManager.viewOrderDetails();
-                    break;
-                case 5:
-                    orderManager.completeOrder();
-                    break;
-                case 6:
-                    orderManager.cancelOrder();
-                    break;
-                case 7:
-                    displayMostPopularItem();
-                    break;
-                case 8:
-                    getTurnover();
-                    break;
-                case 9:
-                    orderManager.modifyProduct();
-                    break;
-                case 10:
-                    running = false;
-                    System.out.println("Afslutter programmet...");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Ugyldig valg. Prøv igen.");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+            case 1 -> menu.displayMenu();
+            case 2 -> orderManager.displayOrderList();
+            case 3 -> orderManager.createOrder();
+            case 4 -> orderManager.completeOrder();
+            case 5 -> orderManager.cancelOrder();
+            case 6 -> orderManager.displayMostPopularItem();
+            case 7 -> orderManager.displayTurnover();
+            case 8 -> modifyProduct();
+            case 9 -> {
+                System.out.println("Afslutter programmet...");
+                System.exit(0);
             }
-
-            printMainMenu();
+            default -> System.out.println("Ugyldigt valg. Prøv igen.");
         }
     }
 
-    public void displayMostPopularItem() {
-        Statistics statistics = new Statistics();
-        statistics.calculateMostOrderedItems(orderHistory.getAllOrdersList());
-    }
+    public void modifyProduct() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Indtast produktnummer på det Produkt der skal ændres:");
 
-    public void getTurnover() {
-        double turnover = orderHistory.getTurnover();
-        System.out.printf("Omsætning I ALT: %.2f \n", turnover);
+        while (!scanner.hasNextInt()) {
+            System.out.println("Vi kunne ikke forstå din anmodning, prøv igen: ");
+        }
+
+        int productNumber = scanner.nextInt();
+        scanner.nextLine();
+
+        Product product = menu.findProductByNumber(productNumber);
+
+        if (product != null) {
+            System.out.println("Nuværende pris for " + product.getName() + ": " + product.getPrice() + " kr.");
+            System.out.print("Indtast ny pris: ");
+            double newPrice = scanner.nextDouble();
+
+            product.setPrice(newPrice);
+
+            System.out.println("Produktprisen er blevet ændret.");
+        } else {
+            System.out.println("Produkt med det nummer blev ikke fundet.");
+        }
     }
 
 }
