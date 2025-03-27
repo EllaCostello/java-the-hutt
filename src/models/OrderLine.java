@@ -2,28 +2,28 @@ package models;
 
 public class OrderLine {
     final Product product;
-    private final int quantity;
-    private final double currentPrice;
+    private final int QUANTITY;
+    private final double CURRENT_PRICE;
 
     public OrderLine(Product product, int quantity) {
         this.product = product;
-        this.quantity = quantity;
-        this.currentPrice = product.getPrice();
+        this.QUANTITY = quantity;
+        this.CURRENT_PRICE = product.getPrice();
     }
 
     public double getTotalPrice() {
-        return currentPrice * quantity;
+        return CURRENT_PRICE * QUANTITY;
     }
 
     public Product getProduct() {
         return product;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getQUANTITY() {
+        return QUANTITY;
     }
 
     public String toString() {
-        return quantity + "x " + product.getProductNumber() + ". " + product.getName() + " " + this.getTotalPrice();
+        return QUANTITY + "x " + product.getPRODUCT_NUMBER() + ". " + product.getName() + " " + this.getTotalPrice();
     }
 }

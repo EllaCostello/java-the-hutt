@@ -6,15 +6,15 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Order {
-    private final ArrayList<OrderLine> orderLines;
+    private final ArrayList<OrderLine> ORDER_LINES;
     private OrderStatus orderStatus;
     private LocalDateTime pickUpTime;
     private static int previousID;
-    private final int id;
+    private final int ID;
 
     public Order(int inputTime) {
-        this.id = ++previousID;
-        this.orderLines = new ArrayList<>();
+        this.ID = ++previousID;
+        this.ORDER_LINES = new ArrayList<>();
         this.orderStatus = OrderStatus.IN_PROGRESS;
         calculatePickUpTime(inputTime);
     }
@@ -28,16 +28,16 @@ public class Order {
     }
 
     public void addOrderLine(Product product, int quantity) {
-        orderLines.add(new OrderLine(product, quantity));
+        ORDER_LINES.add(new OrderLine(product, quantity));
     }
 
-    public ArrayList<OrderLine> getOrderLines() {
-        return orderLines;
+    public ArrayList<OrderLine> getORDER_LINES() {
+        return ORDER_LINES;
     }
 
     public double getTotal() {
         double total = 0;
-        for (OrderLine line : orderLines) {
+        for (OrderLine line : ORDER_LINES) {
             total += line.getTotalPrice();
         }
         return total;
@@ -47,8 +47,8 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public int getId() {
-        return id;
+    public int getID() {
+        return ID;
     }
     public OrderStatus getOrderStatus() {
         return orderStatus;
@@ -56,7 +56,7 @@ public class Order {
 
     public String printCurrentOrder() {
         System.out.println("Ordre: ");
-        for (OrderLine o : orderLines) {
+        for (OrderLine o : ORDER_LINES) {
             System.out.println(o);
         }
         return "";
@@ -74,7 +74,7 @@ public class Order {
                 "Total pris: " + updatedTotal + "\n" +
                 "Afhentningstid: " + formattedTime + "\n" +
                 "Status: " + orderStatus + "\n" +
-                "ID: " + id + "\n" +
+                "ID: " + ID + "\n" +
                 "________________________________________________________________________";
 
     }

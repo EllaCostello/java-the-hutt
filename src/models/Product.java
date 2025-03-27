@@ -1,20 +1,20 @@
 package models;
 
 public class Product {
-    private final String name;
+    private final String NAME;
     private double price;
-    private final int productNumber;
-    private final String ingredients;
+    private final int PRODUCT_NUMBER;
+    private final String INGREDIENTS;
 
     public Product(int productNumber, double price, String name,  String ingredients) {
-        this.productNumber = productNumber;
+        this.PRODUCT_NUMBER = productNumber;
         this.price = price;
-        this.name = name;
-        this.ingredients = ingredients;
+        this.NAME = name;
+        this.INGREDIENTS = ingredients;
     }
 
     public String getName() {
-        return name;
+        return NAME;
     }
 
     public double getPrice() {
@@ -25,24 +25,24 @@ public class Product {
         price = inputPrice;
     }
 
-    public int getProductNumber() {
-        return productNumber;
+    public int getPRODUCT_NUMBER() {
+        return PRODUCT_NUMBER;
     }
 
     @Override
     public String toString() {
-        return  productNumber + ". " + name + ", pris: " + price;
+        return  PRODUCT_NUMBER + ". " + NAME + ", pris: " + price;
     }
 
 
     public String toStringForMenu() {
-        if (productNumber < 10) {
+        if (PRODUCT_NUMBER < 10) {
             return """
                     %d. %-85s %.0f
-                    \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
+                    \033[3m%s\033[0m""".formatted(PRODUCT_NUMBER, NAME, price, INGREDIENTS);
         }
         return """
                 %d. %-84s %.0f
-                \033[3m%s\033[0m""".formatted(productNumber, name, price, ingredients);
+                \033[3m%s\033[0m""".formatted(PRODUCT_NUMBER, NAME, price, INGREDIENTS);
     }
 }

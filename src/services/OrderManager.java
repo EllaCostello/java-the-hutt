@@ -7,78 +7,78 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class OrderManager {
-    private final Menu menu;
-    private final ArrayList<Order> activeOrders;
-    private final OrderStatistics orderStatistics;
-    Scanner scanner;
+    private final Menu MENU;
+    private final ArrayList<Order> ACTIVE_ORDERS;
+    private final OrderStatistics ORDER_STATISTICS;
+    private final Scanner SCANNER;
 
     public OrderManager(Menu menu) {
-        this.menu = menu;
-        this.activeOrders = new ArrayList<>();
-        this.orderStatistics = new OrderStatistics();
-        this.scanner = new Scanner(System.in);
+        this.MENU = menu;
+        this.ACTIVE_ORDERS = new ArrayList<>();
+        this.ORDER_STATISTICS = new OrderStatistics();
+        this.SCANNER = new Scanner(System.in);
 
     }
 
     public void createOrder() {
         System.out.print("Indtast afhentningstid i minutter: ");
-        while (!scanner.hasNextInt()) {
+        while (!SCANNER.hasNextInt()) {
             System.out.print("Ugyldigt input, prøv igen: ");
-            scanner.next();
+            SCANNER.next();
         }
-        int pickupTime = scanner.nextInt();
-        scanner.nextLine();
+        int pickupTime = SCANNER.nextInt();
+        SCANNER.nextLine();
 
         Order order = new Order(pickupTime);
 
         boolean addingProducts = true;
         while (addingProducts) {
             System.out.print("Indtast produktnummer (eller 0 for at afslutte): ");
-            while (!scanner.hasNextInt()) {
+            while (!SCANNER.hasNextInt()) {
                 System.out.print("Ugyldigt input, prøv igen: ");
-                scanner.nextLine();
+                SCANNER.nextLine();
             }
-            int productNumber = scanner.nextInt();
-            scanner.nextLine();
+            int productNumber = SCANNER.nextInt();
+            SCANNER.nextLine();
 
             if (productNumber == 0) {
                 addingProducts = false;
                 continue;
             }
 
-            Product product = menu.findProductByNumber(productNumber);
+            Product product = MENU.findProductByNumber(productNumber);
             if (product == null) {
                 System.out.println("Produkt ikke fundet, prøv igen.");
                 continue;
             }
 
             System.out.print("Indtast antal: ");
-            while (!scanner.hasNextInt() || scanner.nextInt() != 0) {
+            while (!SCANNER.hasNextInt()) {
                 System.out.print("Ugyldigt antal, prøv igen: ");
-                scanner.next();
+                SCANNER.next();
             }
-            int quantity = scanner.nextInt();
-            scanner.nextLine();
+            int quantity = SCANNER.nextInt();
+            SCANNER.nextLine();
 
 
             order.addOrderLine(product, quantity);
             System.out.println(quantity + " stk. " + product.getName() + " tilføjet til ordre." );
         }
 
-        activeOrders.add(order);
-        System.out.println("Ordre #" + order.getId() + " oprettet.");
+        ACTIVE_ORDERS.add(order);
+        System.out.println("Ordre #" + order.getID() + " oprettet.");
         System.out.println(order);
 
     }
 
     public void completeOrder() {
         System.out.print("Indtast ordre-ID der skal færdiggøres: ");
-        while (!scanner.hasNextInt()) {
+        while (!SCANNER.hasNextInt()) {
             System.out.print("Ugyldigt input, prøv igen: ");
-            scanner.next();
+            SCANNER.next();
         }
-        int orderId = scanner.nextInt();
-        scanner.nextLine();
+        int orderId = SCANNER.nextInt();
+        SCANNER.nextLine();
 
         Order orderToComplete = findOrder(orderId);
         if (orderToComplete == null) {
@@ -86,10 +86,10 @@ public class OrderManager {
             return;
         }
 
-        activeOrders.remove(orderToComplete);
+        ACTIVE_ORDERS.remove(orderToComplete);
         orderToComplete.setOrderStatus(OrderStatus.COMPLETED);
-        orderStatistics.addCompletedOrder(orderToComplete);
-        System.out.println("Ordre #" + orderToComplete.getId() + " færdiggjort.");
+        ORDER_STATISTICS.addCompletedOrder(orderToComplete);
+        System.out.println("Ordre #" + orderToComplete.getID() + " færdiggjort.");
     }
 
     public void cancelOrder() {
@@ -101,20 +101,20 @@ public class OrderManager {
             return;
         }
 
-        activeOrders.remove(orderToCancel);
+        ACTIVE_ORDERS.remove(orderToCancel);
         orderToCancel.setOrderStatus(OrderStatus.CANCELLED);
-        System.out.println("Ordre #" + orderToCancel.getId() + " annulleret.");
+        System.out.println("Ordre #" + orderToCancel.getID() + " annulleret.");
     }
 
     private Order findOrder(int orderId) {
-        return activeOrders.stream()
-                .filter(o -> o.getId() == orderId)
+        return ACTIVE_ORDERS.stream()
+                .filter(o -> o.getID() == orderId)
                 .findFirst()
                 .orElse(null);
     }
 
     public void displayOrderList() {
-        ArrayList<Order> allOrdersSorted = activeOrders;
+        ArrayList<Order> allOrdersSorted = ACTIVE_ORDERS;
 
         if (!allOrdersSorted.isEmpty()) {
             System.out.println("""
@@ -133,25 +133,25 @@ public class OrderManager {
     }
 
     public void displayMostPopularItem() {
-        orderStatistics.calculateMostOrderedItems();
+        ORDER_STATISTICS.calculateMostOrderedItems();
     }
 
     public void displayTurnover() {
-        System.out.printf("Omsætning I ALT: %.2f kr.\n", orderStatistics.getTurnover());
+        System.out.printf("Omsætning I ALT: %.2f kr.\n", ORDER_STATISTICS.getTurnover());
     }
 
     public Order handleIDInput() {
         int chosenID;
 
         while (true) {
-            if (!scanner.hasNextInt()) {
+            if (!SCANNER.hasNextInt()) {
                 System.out.println("Vi kunne ikke forstå dit ønske, prøv venligst igen: ");
-                scanner.nextLine();
+                SCANNER.nextLine();
                 continue;
             }
 
-            chosenID = scanner.nextInt();
-            scanner.nextLine();
+            chosenID = SCANNER.nextInt();
+            SCANNER.nextLine();
 
             if (findOrder(chosenID) != null) {
                 return findOrder(chosenID);

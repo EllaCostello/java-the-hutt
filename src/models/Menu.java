@@ -50,7 +50,7 @@ public class Menu {
 
     public Product findProductByNumber(int productNumber) {
         for (Product product : getProducts()) {
-            if (product.getProductNumber() == productNumber) {
+            if (product.getPRODUCT_NUMBER() == productNumber) {
                 return product;
             }
         }

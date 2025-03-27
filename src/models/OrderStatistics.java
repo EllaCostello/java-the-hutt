@@ -3,16 +3,16 @@ package models;
 import java.util.ArrayList;
 
 public class OrderStatistics {
-    private final ArrayList<Order> completedOrders;
+    private final ArrayList<Order> COMPLETED_ORDERS;
     private double totalTurnover;
 
     public OrderStatistics() {
-        this.completedOrders = new ArrayList<>();
+        this.COMPLETED_ORDERS = new ArrayList<>();
         this.totalTurnover = 0.0;
     }
 
     public void addCompletedOrder(Order order) {
-        completedOrders.add(order);
+        COMPLETED_ORDERS.add(order);
         totalTurnover += order.getTotal();
     }
 
@@ -21,7 +21,7 @@ public class OrderStatistics {
     }
 
     public void calculateMostOrderedItems() {
-        if (completedOrders.isEmpty()) {
+        if (COMPLETED_ORDERS.isEmpty()) {
             System.out.println("Ingen bestillinger er gennemført endnu.");
             return;
         }
@@ -29,10 +29,10 @@ public class OrderStatistics {
         ArrayList<Product> orderedProducts = new ArrayList<>();
         ArrayList<Integer> productCounts = new ArrayList<>();
 
-        for (Order order : completedOrders) {
-            for (OrderLine line : order.getOrderLines()) {
+        for (Order order : COMPLETED_ORDERS) {
+            for (OrderLine line : order.getORDER_LINES()) {
                 Product product = line.getProduct();
-                int quantity = line.getQuantity();
+                int quantity = line.getQUANTITY();
                 int index = orderedProducts.indexOf(product);
 
                 if (index == -1) {

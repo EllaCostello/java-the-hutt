@@ -4,9 +4,9 @@ import models.*;
 
 import java.util.Scanner;
 public class UserInterface {
-    Scanner scanner = new Scanner(System.in);
-    private final Menu menu = new Menu();
-    private final OrderManager orderManager = new OrderManager(menu);
+    private final Scanner SCANNER = new Scanner(System.in);
+    private final Menu MENU = new Menu();
+    private final OrderManager ORDER_MANAGER = new OrderManager(MENU);
 
     public void printMainMenu() {
         while (true) {
@@ -33,22 +33,22 @@ public class UserInterface {
     }
 
     private void handleMenuChoice() {
-        while (!scanner.hasNextInt()) {
+        while (!SCANNER.hasNextInt()) {
             System.out.print("Vi kunne ikke forstå dit ønske, prøv igen: ");
-            scanner.next();
+            SCANNER.next();
         }
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = SCANNER.nextInt();
+        SCANNER.nextLine();
 
         switch (choice) {
-            case 1 -> menu.displayMenu();
-            case 2 -> orderManager.displayOrderList();
-            case 3 -> orderManager.createOrder();
-            case 4 -> orderManager.completeOrder();
-            case 5 -> orderManager.cancelOrder();
-            case 6 -> orderManager.displayMostPopularItem();
-            case 7 -> orderManager.displayTurnover();
+            case 1 -> MENU.displayMenu();
+            case 2 -> ORDER_MANAGER.displayOrderList();
+            case 3 -> ORDER_MANAGER.createOrder();
+            case 4 -> ORDER_MANAGER.completeOrder();
+            case 5 -> ORDER_MANAGER.cancelOrder();
+            case 6 -> ORDER_MANAGER.displayMostPopularItem();
+            case 7 -> ORDER_MANAGER.displayTurnover();
             case 8 -> modifyProduct();
             case 9 -> {
                 System.out.println("Afslutter programmet...");
@@ -69,7 +69,7 @@ public class UserInterface {
         int productNumber = scanner.nextInt();
         scanner.nextLine();
 
-        Product product = menu.findProductByNumber(productNumber);
+        Product product = MENU.findProductByNumber(productNumber);
 
         if (product != null) {
             System.out.println("Nuværende pris for " + product.getName() + ": " + product.getPrice() + " kr.");
