@@ -1,6 +1,7 @@
 package services;
 
 import models.*;
+import util.InputHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,36 +11,25 @@ public class OrderManager {
     private final Menu MENU;
     private final ArrayList<Order> ACTIVE_ORDERS;
     private final OrderStatistics ORDER_STATISTICS;
-    private final Scanner SCANNER;
 
     public OrderManager(Menu menu) {
         this.MENU = menu;
         this.ACTIVE_ORDERS = new ArrayList<>();
         this.ORDER_STATISTICS = new OrderStatistics();
-        this.SCANNER = new Scanner(System.in);
+
 
     }
 
     public void createOrder() {
-        System.out.print("Indtast afhentningstid i minutter: ");
-        while (!SCANNER.hasNextInt()) {
-            System.out.print("Ugyldigt input, prøv igen: ");
-            SCANNER.next();
-        }
-        int pickupTime = SCANNER.nextInt();
-        SCANNER.nextLine();
+        int pickupTime = InputHelper.getIntInput("Indtast afhentningstid i minutter: ", "Ugyldigt input, prøv igen: ");
 
         Order order = new Order(pickupTime);
 
         boolean addingProducts = true;
         while (addingProducts) {
-            System.out.print("Indtast produktnummer (eller 0 for at afslutte): ");
-            while (!SCANNER.hasNextInt()) {
-                System.out.print("Ugyldigt input, prøv igen: ");
-                SCANNER.nextLine();
-            }
-            int productNumber = SCANNER.nextInt();
-            SCANNER.nextLine();
+
+            int productNumber = InputHelper.getIntInput("Indtast produktnummer (eller 0 for at afslutte): ","Ugyldigt input, prøv igen: " );
+
 
             if (productNumber == 0) {
                 addingProducts = false;
@@ -52,13 +42,8 @@ public class OrderManager {
                 continue;
             }
 
-            System.out.print("Indtast antal: ");
-            while (!SCANNER.hasNextInt()) {
-                System.out.print("Ugyldigt antal, prøv igen: ");
-                SCANNER.next();
-            }
-            int quantity = SCANNER.nextInt();
-            SCANNER.nextLine();
+            int quantity = InputHelper.getIntInput("Indtast antal: ", "Ugyldigt antal prøv igen: ");
+
 
 
             order.addOrderLine(product, quantity);
@@ -72,13 +57,9 @@ public class OrderManager {
     }
 
     public void completeOrder() {
-        System.out.print("Indtast ordre-ID der skal færdiggøres: ");
-        while (!SCANNER.hasNextInt()) {
-            System.out.print("Ugyldigt input, prøv igen: ");
-            SCANNER.next();
-        }
-        int orderId = SCANNER.nextInt();
-        SCANNER.nextLine();
+
+        int orderId = InputHelper.getIntInput("Indtast ordre-ID der skal færdiggøres: ", "Ugyldigt input prøv igen: ");
+
 
         Order orderToComplete = findOrder(orderId);
         if (orderToComplete == null) {
@@ -93,7 +74,6 @@ public class OrderManager {
     }
 
     public void cancelOrder() {
-        System.out.print("Indtast ordre-ID der skal annulleres: ");
 
         Order orderToCancel = handleIDInput();
         if (orderToCancel == null) {
@@ -144,14 +124,8 @@ public class OrderManager {
         int chosenID;
 
         while (true) {
-            if (!SCANNER.hasNextInt()) {
-                System.out.println("Vi kunne ikke forstå dit ønske, prøv venligst igen: ");
-                SCANNER.nextLine();
-                continue;
-            }
+            chosenID = InputHelper.getIntInput("Indtast ordre-ID der skal annulleres: ", "Vi kunne ikke forstå dit ønske, prøv venligst igen: ");
 
-            chosenID = SCANNER.nextInt();
-            SCANNER.nextLine();
 
             if (findOrder(chosenID) != null) {
                 return findOrder(chosenID);

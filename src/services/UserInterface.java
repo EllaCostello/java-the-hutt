@@ -1,10 +1,10 @@
 package services;
 
 import models.*;
+import util.InputHelper;
 
-import java.util.Scanner;
 public class UserInterface {
-    private final Scanner SCANNER = new Scanner(System.in);
+
     private final Menu MENU = new Menu();
     private final OrderManager ORDER_MANAGER = new OrderManager(MENU);
 
@@ -26,20 +26,15 @@ public class UserInterface {
                 8. Ændre prisen på et produkt
                 9. Afslut program
                 
-                Indtast valg her:\s""");
+                \s""");
 
             handleMenuChoice();
         }
     }
 
     private void handleMenuChoice() {
-        while (!SCANNER.hasNextInt()) {
-            System.out.print("Vi kunne ikke forstå dit ønske, prøv igen: ");
-            SCANNER.next();
-        }
+        int choice = InputHelper.getIntInput("Indtast valg her: ", "Vi kunne ikke forstå dit ønske, prøv igen: ");
 
-        int choice = SCANNER.nextInt();
-        SCANNER.nextLine();
 
         switch (choice) {
             case 1 -> MENU.displayMenu();
@@ -59,22 +54,14 @@ public class UserInterface {
     }
 
     public void modifyProduct() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Indtast produktnummer på det Produkt der skal ændres:");
+        int productNumber = InputHelper.getIntInput("Indtast produktnummer på det Produkt der skal ændres: ","Vi kunne ikke forstå din anmodning, prøv igen: " );
 
-        while (!scanner.hasNextInt()) {
-            System.out.println("Vi kunne ikke forstå din anmodning, prøv igen: ");
-        }
-
-        int productNumber = scanner.nextInt();
-        scanner.nextLine();
 
         Product product = MENU.findProductByNumber(productNumber);
 
         if (product != null) {
             System.out.println("Nuværende pris for " + product.getName() + ": " + product.getPrice() + " kr.");
-            System.out.print("Indtast ny pris: ");
-            double newPrice = scanner.nextDouble();
+            double newPrice = InputHelper.getDoubleInput("Indtast ny pris: ", "Fejl!");
 
             product.setPrice(newPrice);
 
